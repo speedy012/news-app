@@ -1,35 +1,42 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import './App.css';
 
 const App = () => {
   const [search, setSearch] = useState('')
+  const [result, setResult] = useState([])
+  const onSearchChange = useCallback((event) => {
+    setSearch(event.target.value)
+  }, [])
 
-  // useEffect(() =>
-  // fetch("https://newsapi.org/v2/everything?q=bitcoin&apiKey=9152561a7d9f477eabb7741f4a904434")
-  //   .then(res => res.json())
-  //   .then(res => console.log(res))
-  // );
+  let fetchData = (searchWord) => {
+    fetch(`https://newsapi.org/v2/everything?q=${searchWord}&apiKey=`)
+     .then(res => res.json())
+     .then(res => setResult(res))
+     .catch(err => console.error(err))
+  }
+
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    console.log(search)
 
-    fetch(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=`)
-    //   .then(res => res.json())
-    //   .then(res => console.log(res))
+    fetchData(search)
+    setSearch('')
   }
 
+console.log(result)
   return (
     <div className="App">
-    <h2 className="title"> <strong>Newsorama</strong></h2>
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name: <br/>
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)}/>
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
+      <h2 className="title"> <strong>Newsorama</strong></h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name: <br/>
+          <input type="text" value={search} onChange={onSearchChange}/>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     </div>
+
+
   );
 }
 
