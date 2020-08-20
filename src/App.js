@@ -1,42 +1,49 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState } from 'react';
+import Articles from './components/Articles'
 import './App.css';
 
 const App = () => {
-  const [search, setSearch] = useState('')
-  const [result, setResult] = useState([])
-  const onSearchChange = useCallback((event) => {
-    setSearch(event.target.value)
-  }, [])
+  const [search, setSearch] = useState('');
+  const [result, setResult] = useState([]);
 
-  let fetchData = (searchWord) => {
+  const fetchData = (searchWord) => {
     fetch(`https://newsapi.org/v2/everything?q=${searchWord}&apiKey=`)
      .then(res => res.json())
      .then(res => setResult(res))
-     .catch(err => console.error(err))
-  }
+     .catch(err => console.error(err));
+  };
 
 
   let handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    fetchData(search)
-    setSearch('')
+    fetchData(search);
+    setSearch('');
+  };
+
+  let removeArticle = (selectedArticle) => {
+    console.log("selectedArticle", selectedArticle)
+    console.log(result)
+
+    let art = result.articles.filter(article => article.title !== selectedArticle.title)
+
+    setResult(art)
   }
 
-console.log(result)
+
+// console.log(result)
   return (
     <div className="App">
       <h2 className="title"> <strong>Newsorama</strong></h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Name: <br/>
-          <input type="text" value={search} onChange={onSearchChange}/>
+          Search News Article:
+          <input type="text" value={search} onChange={event => setSearch(event.target.value)}/>
         </label>
-        <input type="submit" value="Submit" />
+        <button type="submit" value="Submit" />
       </form>
+      <Articles result={result} removeArticle={removeArticle}/>
     </div>
-
-
   );
 }
 
