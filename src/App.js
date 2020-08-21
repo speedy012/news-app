@@ -9,7 +9,9 @@ const App = () => {
 
   const fetchData = (searchWord) => {
     setIsLoading(true)
-    fetch(`https://newsapi.org/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`)
+    let url = 'https://newsapi.org/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434'
+
+    fetch(`https://cors-anywhere.herokuapp.com/${url}`)
      .then(res => res.json())
      .then(res => setArticles(res.articles))
      .catch(err => console.error(err))
