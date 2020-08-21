@@ -9,8 +9,8 @@ const App = () => {
 
   const fetchData = (searchWord) => {
     setIsLoading(true)
-    
-    fetch(`/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`)
+    let proxyUrl = "/.netlify/functions/auth-fetch"
+    fetch(`${proxyUrl}/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`, { headers: { accept: "Accept: application/json" }})
      .then(res => res.json())
      .then(res => setArticles(res.articles))
      .catch(err => console.error(err))
