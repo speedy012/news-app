@@ -10,9 +10,7 @@ const App = () => {
   const fetchData = (searchWord) => {
     setIsLoading(true)
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = `https://newsapi.org/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`
-
-    fetch(proxyurl + url)
+    fetch(`${proxyurl}/https://newsapi.org/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`)
      .then(res => res.json())
      .then(res => setArticles(res.articles))
      .catch(err => console.error(err))
