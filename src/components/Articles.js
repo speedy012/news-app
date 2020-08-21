@@ -8,10 +8,10 @@ const Articles = (props) => {
     <div>
       <div className="articles-body">
         {
-          props.result.articles === undefined ?
+          props.articles === undefined ?
             null :
-            props.result.articles.map(article => {
-              return <ArticleCard key={article.publishedAt} article={article} removeArticle={props.removeArticle}/>
+            props.articles.map(article => {
+              return <ArticleCard key={`${article.publishedAt}_${article.title}`}  article={article} removeArticle={props.removeArticle}/>
             })
         }
       </div>

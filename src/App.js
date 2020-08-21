@@ -4,34 +4,35 @@ import './App.css';
 
 const App = () => {
   const [search, setSearch] = useState('');
-  const [result, setResult] = useState([]);
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchData = (searchWord) => {
-    fetch(`https://newsapi.org/v2/everything?q=${searchWord}&apiKey=`)
+    setIsLoading(true)
+    fetch(`https://newsapi.org/v2/everything?q=${searchWord}&apiKey=9152561a7d9f477eabb7741f4a904434`)
      .then(res => res.json())
-     .then(res => setResult(res))
-     .catch(err => console.error(err));
+     .then(res => setArticles(res.articles))
+     .catch(err => console.error(err))
+     .finally(() => setIsLoading(false))
   };
 
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     fetchData(search);
     setSearch('');
   };
 
-  let removeArticle = (selectedArticle) => {
-    console.log("selectedArticle", selectedArticle)
-    console.log(result)
+  const removeArticle = (selectedArticle) => {
+    console.log(selectedArticle)
+    const filteredArticles = articles.filter(article => article.title !== selectedArticle.title)
 
-    let art = result.articles.filter(article => article.title !== selectedArticle.title)
-
-    setResult(art)
+    setArticles(filteredArticles)
   }
 
 
-// console.log(result)
+console.log(articles)
   return (
     <div className="App">
       <h2 className="title"> <strong>Newsorama</strong></h2>
@@ -42,7 +43,7 @@ const App = () => {
         </label>
         <button type="submit" value="Submit" />
       </form>
-      <Articles result={result} removeArticle={removeArticle}/>
+      {isLoading ? <span>Loading</span> :<Articles articles={articles} removeArticle={removeArticle}/>}
     </div>
   );
 }

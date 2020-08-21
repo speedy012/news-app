@@ -20,6 +20,10 @@ font-weight: 900;
   transition: 0.3s;
   width: 31%;
   margin: 1%;
+  background-color: white;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
 }
 
 .article-card:hover {
@@ -36,4 +40,19 @@ input {
   font-family: merriweather;
   font-size: 1em;
   margin: 0 auto;
+}
+
+button {
+  min-width: 100px;
+  padding: 0.54rem 0.75rem;
+  background-color: #2954AF;
+  color: green;
+  border-radius: 4px;
+  margin: 0.5rem;
+  border: 1px solid #1843AF;
+
+}
+
+.content {
+  
 }
