@@ -32,7 +32,7 @@ const App = () => {
   }
 
 
-console.log(articles)
+// console.log(articles)
   return (
     <div className="App">
       <h2 className="title"> <strong>Newsorama</strong></h2>
